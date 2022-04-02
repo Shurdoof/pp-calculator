@@ -7,9 +7,10 @@
     import PpCalculator from '$lib/PPCalculator.svelte';
     import PpMatrix from '$lib/PPMatrix.svelte';
     import { curves, type Curve } from '$lib/pp/curves';
+    import StarModifierSelector from '$lib/StarModifierSelector.svelte';
 
     let curve: Curve = curves[0];
-    // let curve: Curve;
+    let starMultiplier: number;
 </script>
 
 <svelte:head>
@@ -17,19 +18,14 @@
 </svelte:head>
 
 <section>
-    <CurveSelector bind:value={curve} />
+    <div class="my-4">
+        <StarModifierSelector bind:value={starMultiplier} />
+    </div>
+    <div class="my-4">
+        <CurveSelector bind:value={curve} />
+    </div>
     <div class="divider" />
-    <PpCalculator {curve} />
+    <PpCalculator {curve} {starMultiplier} />
     <div class="divider" />
-    <PpMatrix {curve} />
+    <PpMatrix {curve} {starMultiplier} />
 </section>
-<!-- 
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
-	}
-</style> -->

@@ -2,16 +2,17 @@
     import type { Curve } from '$lib/pp/curves';
     import { calculatePP } from '$lib/pp/calculator';
 
-    type HoverState = { star: number; acc: number };
+    type HoverState = { starRating: number; acc: number };
 
     function range(start: number, end: number) {
         return Array.from(new Array(end - start + 1), (x, i) => i + start);
     }
 
     export let curve: Curve;
+    export let starMultiplier: number;
 
     export let minStars = 1;
-    export let maxStars = 13;
+    export let maxStars = 20;
 
     export let minAcc = 85;
     export let maxAcc = 100;
@@ -19,13 +20,13 @@
     let currentHover: HoverState | null = null;
 </script>
 
-<div>
+<div class="overflow-x-auto">
     <table class="table table-compact pp-matrix">
         <thead>
             <tr>
                 <th />
-                {#each range(minStars, maxStars) as star}
-                    <th class:highlight={star === currentHover?.star}>{star} ★</th>
+                {#each range(minStars, maxStars) as starRating}
+                    <th class:highlight={starRating === currentHover?.starRating}>{starRating} ★</th>
                 {/each}
                 <th />
             </tr>
@@ -36,12 +37,12 @@
                     <th class:highlight={acc === currentHover?.acc}>
                         {acc}%
                     </th>
-                    {#each range(minStars, maxStars) as star}
+                    {#each range(minStars, maxStars) as starRating}
                         <td
-                            class:hover={star === currentHover?.star && acc === currentHover?.acc}
-                            class:highlight={star === currentHover?.star || acc === currentHover?.acc}
-                            on:mouseenter={e => (currentHover = { star, acc })}
-                            on:mouseleave={e => (currentHover = null)}>{calculatePP(curve.points, star, acc).pp.toFixed(2)}</td
+                            class:hover={starRating === currentHover?.starRating && acc === currentHover?.acc}
+                            class:highlight={starRating === currentHover?.starRating || acc === currentHover?.acc}
+                            on:mouseenter={e => (currentHover = { starRating, acc })}
+                            on:mouseleave={e => (currentHover = null)}>{calculatePP(curve.points, acc, starRating, starMultiplier).pp.toFixed(2)}</td
                         >
                     {/each}
 
@@ -55,8 +56,8 @@
         <tfoot>
             <tr>
                 <th />
-                {#each range(minStars, maxStars) as star}
-                    <th class:highlight={star === currentHover?.star}>{star} ★</th>
+                {#each range(minStars, maxStars) as starRating}
+                    <th class:highlight={starRating === currentHover?.starRating}>{starRating} ★</th>
                 {/each}
                 <th />
             </tr>

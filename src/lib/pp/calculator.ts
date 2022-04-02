@@ -1,8 +1,6 @@
 import { clamp } from '$lib/utils/numbers';
 import type { CurvePoint, CurvePointList } from './curves';
-const starsToPPRatio = 42.11;
-
-
+const defaultStarMultiplier = 42.11;
 
 function lerp(v0: number, v1: number, t: number) {
     // return (1 - t) * v0 + t * v1;
@@ -34,8 +32,8 @@ export interface CalculationResult {
     ppValue: number;
 }
 
-export function calculatePP(curve: CurvePointList, stars: number, acc: number): CalculationResult {
-    const ppValue = stars * starsToPPRatio;
+export function calculatePP(curve: CurvePointList, acc: number, stars: number, starMultiplier = defaultStarMultiplier): CalculationResult {
+    const ppValue = stars * starMultiplier;
     const modifier = findPPModifier(acc, curve); //curve.find((x) => x[0] <= acc)[1];
 
     const pp = modifier * ppValue;

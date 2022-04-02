@@ -3,11 +3,11 @@
     import type { Curve } from '$lib/pp/curves';
     import { clamp } from '$lib/utils/numbers';
 
-    let stars: number = 7;
+    let starRating: number = 7;
     let acc = 95;
 
     $: modifyStars = (value: number) => {
-        stars = clamp(stars + value, 0, 100);
+        starRating = clamp(starRating + value, 0, 100);
     };
 
     $: modifyAcc = (value: number) => {
@@ -15,9 +15,10 @@
     };
 
     export let curve: Curve;
+    export let starMultiplier: number;
 </script>
 
-<div class="p-4">
+<div>
     <div class="stats bg-base-200">
         <div class="stat">
             <div class="stat-figure text-primary" />
@@ -39,7 +40,7 @@
             <div class="stat-value">
                 <div class="input-group">
                     <button class="btn btn-sm btn-square" on:click={e => modifyStars(-1)}>-</button>
-                    <input type="number" bind:value={stars} class="input input-bordered input-sm" min="0" max="100" />
+                    <input type="number" bind:value={starRating} class="input input-bordered input-sm" min="0" max="100" />
                     <button class="btn btn-sm btn-square" on:click={e => modifyStars(+1)}>+</button>
                 </div>
             </div>
@@ -50,7 +51,7 @@
             <div class="stat-title">Performance Points</div>
 
             <div class="stat-value text-primary">
-                {calculatePP(curve.points, stars, acc).pp.toFixed(2)}
+                {calculatePP(curve.points, acc, starRating, starMultiplier).pp.toFixed(2)}
             </div>
         </div>
     </div>
