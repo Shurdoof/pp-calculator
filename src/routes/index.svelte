@@ -3,7 +3,13 @@
 </script>
 
 <script lang="ts">
+	import CurveSelector from '$lib/CurveSelector.svelte';
 	import PpCalculator from '$lib/PPCalculator.svelte';
+	import PpMatrix from '$lib/PPMatrix.svelte';
+	import { curves, type Curve } from '$lib/pp/curves';
+
+	let curve: Curve = curves[0];
+	// let curve: Curve;
 </script>
 
 <svelte:head>
@@ -11,7 +17,11 @@
 </svelte:head>
 
 <section>
-	<PpCalculator />
+	<CurveSelector bind:value={curve} />
+	<div class="divider" />
+	<PpCalculator {curve} />
+	<div class="divider" />
+	<PpMatrix {curve} />
 </section>
 <!-- 
 <style>

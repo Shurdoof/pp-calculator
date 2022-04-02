@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { calculatePP } from '../pp/calculator';
-	import { curves, type Curve } from '../pp/curves';
+	import type { Curve } from '$lib/pp/curves';
+import { calculatePP } from '$lib/pp/calculator';
+
 	type HoverState = { star: number; acc: number };
-	type HighlightType = 'cell' | 'row/column' | 'none';
 
 	function range(start: number, end: number) {
 		return Array.from(new Array(end - start + 1), (x, i) => i + start);
 	}
 
-	export let curve: Curve = curves[0];
+	export let curve: Curve;
 
 	export let minStars = 1;
 	export let maxStars = 13;
@@ -27,6 +27,7 @@
 				{#each range(minStars, maxStars) as star}
 					<th class:highlight={star === currentHover?.star}>{star} ★</th>
 				{/each}
+				<th />
 			</tr>
 		</thead>
 		<tbody>
@@ -43,9 +44,23 @@
 							on:mouseleave={e => (currentHover = null)}>{calculatePP(curve.points, star, acc).pp.toFixed(2)}</td
 						>
 					{/each}
+
+					<th class:highlight={acc === currentHover?.acc}>
+						{acc}%
+					</th>
 				</tr>
 			{/each}
 		</tbody>
+
+		<tfoot>
+			<tr>
+				<th />
+				{#each range(minStars, maxStars) as star}
+					<th class:highlight={star === currentHover?.star}>{star} ★</th>
+				{/each}
+				<th />
+			</tr>
+		</tfoot>
 	</table>
 </div>
 
@@ -57,6 +72,10 @@
 	.pp-matrix th {
 		width: 70px;
 		text-align: right;
+	}
+
+	.pp-matrix th {
+		@apply bg-base-200;
 	}
 	.highlight {
 		@apply bg-base-200;
