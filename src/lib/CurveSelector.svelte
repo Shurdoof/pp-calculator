@@ -80,8 +80,8 @@
         </div>
         <p class="my-4">Custom curves are stored locally on the browser!</p>
         <div class="modal-action">
-            <a href="#" class="btn">Cancel</a>
-            <a href="#" class="btn btn-primary" on:click={handleAddCurve}>Add</a>
+            <a href={'#'} class="btn">Cancel</a>
+            <a href={'#'} class="btn btn-primary" on:click={handleAddCurve}>Add</a>
         </div>
     </div>
 </div>
@@ -91,8 +91,8 @@
         <h3 class="font-bold text-lg mb-4">Delete curve</h3>
         <p class="py-4">Are you sure you want to delete curve {value.name}?</p>
         <div class="modal-action">
-            <a href="#" class="btn">Cancel</a>
-            <a href="#" class="btn btn-error" on:click={handleDeleteCurve}>Delete</a>
+            <a href={'#'} class="btn">Cancel</a>
+            <a href={'#'} class="btn btn-error" on:click={handleDeleteCurve}>Delete</a>
         </div>
     </div>
 </div>
@@ -104,7 +104,7 @@
             <textarea rows={14} value={stringifyCurve(value)} class="textarea textarea-bordered" readonly />
         </div>
         <div class="modal-action">
-            <a href="#" class="btn">Okay</a>
+            <a href={'#'} class="btn">Okay</a>
         </div>
     </div>
 </div>
