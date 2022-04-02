@@ -1,15 +1,8 @@
+import { clamp } from '$lib/utils/numbers';
 import type { CurvePoint, CurvePointList } from './curves';
 const starsToPPRatio = 42.11;
 
-function clamp(value: number, min: number, max: number) {
-    if (value < min) {
-        return min;
-    }
-    if (value > max) {
-        return max;
-    }
-    return value;
-}
+
 
 function lerp(v0: number, v1: number, t: number) {
     // return (1 - t) * v0 + t * v1;
