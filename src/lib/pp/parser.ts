@@ -26,3 +26,39 @@ export function parseCurve(name: string, pointsData: string): Curve {
         points: parseCurveData(pointsData)
     };
 }
+
+//Yes I know it's ugly, but JSON.stringify doesn't format it like I want.
+export function stringifyCurve(curve: Curve) {
+    const parts = [];
+    const indentString = '    ';
+    let indent = 0;
+
+    const addPart = (value: string) => {
+        parts.push(indentString.repeat(indent) + value);
+    };
+    const escape = (value: any) => {
+        return JSON.stringify(value);
+    };
+
+    addPart('{');
+    indent += 1;
+    addPart(`${escape('name')}: ${escape(curve.name)} ,`);
+    addPart(`${escape('points')}: [`);
+    indent += 1;
+    for (let i = 0; i < curve.points.length; i++) {
+        const point = curve.points[i];
+        let part = `[${escape(point[0])}, ${escape(point[1])}]`;
+
+        if (i < curve.points.length - 1) {
+            part += ',';
+        }
+
+        addPart(part);
+    }
+    indent -= 1;
+    addPart(']');
+    indent -= 1;
+    addPart('}');
+
+    return parts.join('\n');
+}
