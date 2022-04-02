@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+    import { page } from '$app/stores';
 </script>
 
 <header>
-	<div class="navbar bg-base-300">
-		<a sveltekit:prefetch href="/" class="btn btn-ghost normal-case text-xl">PP Calculator</a>
-	</div>
+    <div class="navbar bg-base-300">
+        <a sveltekit:prefetch href="/" class="btn btn-ghost normal-case text-xl">PP Calculator</a>
+    </div>
 
-	<!-- <nav>
+    <!-- <nav>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
 		</svg>
