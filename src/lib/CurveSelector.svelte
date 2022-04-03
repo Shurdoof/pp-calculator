@@ -1,6 +1,6 @@
 <script lang="ts">
     import { curves, type Curve } from '$lib/pp/curves';
-    import { parseCurve, stringifyCurve } from './pp/parser';
+    import { parseCurve, stringifyCurve, type PointListDisplayDirection } from './pp/parser';
     import { addUserCurve, getUserCurves, removeUserCurve } from './pp/userCurves';
 
     let userCurves = getUserCurves();
@@ -8,6 +8,8 @@
 
     let customCurveName: string = '';
     let customCurveData: string = '';
+
+    let curveDisplayDirection: PointListDisplayDirection = 'desc';
 
     $: isCustomCurveSelected = userCurves.includes(value);
 
@@ -32,10 +34,6 @@
         customCurveName = 'New curve';
         customCurveData = '';
     };
-
-    // function prettyJson(obj) {
-    //     return JSON.stringify(value, (a, b) => (Array.isArray(b) && b.length === 2 ? JSON.stringify(b) : b), 4);
-    // }
 </script>
 
 <div class="input-group">
@@ -61,11 +59,11 @@
         {/if}
     </select>
 
-    <a href="#add-curve" class="btn" on:click={resetDialog}>Add curve</a>
+    <a href="#show-curve" class="btn">Curve details</a>
     {#if isCustomCurveSelected}
         <a href="#delete-curve" class="btn">Delete curve</a>
     {/if}
-    <a href="#show-curve" class="btn">Show curve</a>
+    <a href="#add-curve" class="btn" on:click={resetDialog}>Add curve</a>
 </div>
 
 <div class="modal" id="add-curve">
@@ -100,11 +98,26 @@
 <div class="modal" id="show-curve">
     <div class="modal-box">
         <h3 class="font-bold text-lg mb-4">Curve info</h3>
-        <div class="form-control">
-            <textarea rows={14} value={stringifyCurve(value)} class="textarea textarea-bordered" readonly />
+
+        <div class="form-control inline-block">
+            <label class="label cursor-pointer">
+                <input type="radio" bind:group={curveDisplayDirection} value="desc" class="radio" />
+                <span class="label-text ml-2">Descending</span>
+            </label>
         </div>
+        <div class="form-control inline-block">
+            <label class="label cursor-pointer">
+                <input type="radio" bind:group={curveDisplayDirection} value="asc" class="radio" />
+                <span class="label-text ml-2">Ascending</span>
+            </label>
+        </div>
+
+        <div class="form-control">
+            <textarea rows={14} value={stringifyCurve(value, curveDisplayDirection)} class="textarea textarea-bordered" readonly />
+        </div>
+
         <div class="modal-action">
-            <a href={'#'} class="btn">Okay</a>
+            <a href={'#'} class="btn">Close</a>
         </div>
     </div>
 </div>
