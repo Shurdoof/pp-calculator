@@ -29,10 +29,28 @@ export function parseCurve(name: string, pointsData: string): Curve {
 
 export type PointListDisplayDirection = 'asc' | 'desc';
 
+export interface StringifyCurveOptions {
+    direction: PointListDisplayDirection;
+    pretty: boolean;
+    includeMetadata: boolean;
+}
+
+export class StringifyCurveOptions {
+    static defaults(): StringifyCurveOptions {
+        return {
+            direction: 'desc',
+            includeMetadata: true,
+            pretty: true
+        };
+    }
+}
+
 //Yes I know it's ugly, but JSON.stringify doesn't format it like I want.
-export function stringifyCurve(curve: Curve, direction: PointListDisplayDirection = 'desc') {
+export function stringifyCurve(curve: Curve, options: StringifyCurveOptions = null) {
+    options = { ...StringifyCurveOptions.defaults(), ...options };
+
     const parts = [];
-    const indentString = '    ';
+    const indentString = options.pretty ? '    ' : '';
     let indent = 0;
 
     const addPart = (value: string) => {
@@ -42,14 +60,19 @@ export function stringifyCurve(curve: Curve, direction: PointListDisplayDirectio
         return JSON.stringify(value);
     };
 
-    addPart('{');
-    indent += 1;
-    addPart(`${escape('name')}: ${escape(curve.name)} ,`);
-    addPart(`${escape('points')}: [`);
-    indent += 1;
+    if (options.includeMetadata) {
+        addPart('{');
+        indent += 1;
+        addPart(`${escape('name')}: ${escape(curve.name)} ,`);
+        addPart(`${escape('points')}: [`);
+        indent += 1;
+    } else {
+        addPart(`[`);
+        indent += 1;
+    }
 
     let points = curve.points;
-    if (direction === 'asc') {
+    if (options.direction === 'asc') {
         points = points.slice(0).sort((a, b) => a[0] - b[0]);
     }
 
@@ -65,8 +88,11 @@ export function stringifyCurve(curve: Curve, direction: PointListDisplayDirectio
     }
     indent -= 1;
     addPart(']');
-    indent -= 1;
-    addPart('}');
 
-    return parts.join('\n');
+    if (options.includeMetadata) {
+        indent -= 1;
+        addPart('}');
+    }
+
+    return parts.join(options.pretty ? '\n' : '');
 }

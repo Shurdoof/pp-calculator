@@ -1,15 +1,15 @@
 <script lang="ts">
     import { curves, type Curve } from '$lib/pp/curves';
-    import { parseCurve, stringifyCurve, type PointListDisplayDirection } from './pp/parser';
+    import { parseCurve, stringifyCurve, StringifyCurveOptions } from './pp/parser';
     import { addUserCurve, getUserCurves, removeUserCurve } from './pp/userCurves';
 
     let userCurves = getUserCurves();
     export let value: Curve = curves[0];
 
-    let customCurveName: string = '';
+    let customCurveName: string = 'New curve';
     let customCurveData: string = '';
 
-    let curveDisplayDirection: PointListDisplayDirection = 'desc';
+    let stringifyOptions = StringifyCurveOptions.defaults();
 
     $: isCustomCurveSelected = userCurves.includes(value);
 
@@ -99,21 +99,41 @@
     <div class="modal-box">
         <h3 class="font-bold text-lg mb-4">Curve info</h3>
 
-        <div class="form-control inline-block">
-            <label class="label cursor-pointer">
-                <input type="radio" bind:group={curveDisplayDirection} value="desc" class="radio" />
-                <span class="label-text ml-2">Descending</span>
-            </label>
+        <div>
+            <div class="form-control inline-block">
+                <label class="label cursor-pointer">
+                    <input type="checkbox" bind:checked={stringifyOptions.pretty} class="checkbox" />
+                    <span class="label-text ml-2">Prettify</span>
+                </label>
+            </div>
         </div>
-        <div class="form-control inline-block">
-            <label class="label cursor-pointer">
-                <input type="radio" bind:group={curveDisplayDirection} value="asc" class="radio" />
-                <span class="label-text ml-2">Ascending</span>
-            </label>
+
+        <div>
+            <div class="form-control inline-block">
+                <label class="label cursor-pointer">
+                    <input type="checkbox" bind:checked={stringifyOptions.includeMetadata} class="checkbox" />
+                    <span class="label-text ml-2">Include metadata</span>
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <div class="form-control inline-block">
+                <label class="label cursor-pointer">
+                    <input type="radio" bind:group={stringifyOptions.direction} value="desc" class="radio" />
+                    <span class="label-text ml-2">Descending</span>
+                </label>
+            </div>
+            <div class="form-control inline-block">
+                <label class="label cursor-pointer">
+                    <input type="radio" bind:group={stringifyOptions.direction} value="asc" class="radio" />
+                    <span class="label-text ml-2">Ascending</span>
+                </label>
+            </div>
         </div>
 
         <div class="form-control">
-            <textarea rows={14} value={stringifyCurve(value, curveDisplayDirection)} class="textarea textarea-bordered" readonly />
+            <textarea rows={14} value={stringifyCurve(value, stringifyOptions)} class="textarea textarea-bordered" readonly />
         </div>
 
         <div class="modal-action">
