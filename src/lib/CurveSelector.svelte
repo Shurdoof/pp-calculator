@@ -97,7 +97,7 @@
 
 <div class="modal" id="show-curve">
     <div class="modal-box">
-        <h3 class="font-bold text-lg mb-4">Curve info</h3>
+        <h3 class="font-bold text-lg mb-4">Curve details</h3>
 
         <div>
             <div class="form-control inline-block">
@@ -130,6 +130,9 @@
                     <span class="label-text ml-2">Ascending</span>
                 </label>
             </div>
+        </div>
+        <div>
+            Curve has {value.points.length} points
         </div>
 
         <div class="form-control">
