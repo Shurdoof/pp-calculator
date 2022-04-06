@@ -8,4 +8,8 @@
         -webkit-appearance: none;
         margin: 0;
     }
+
+}
+:root {
+    --btn-text-case: none;
 }

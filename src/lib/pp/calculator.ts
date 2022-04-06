@@ -45,3 +45,16 @@ export function calculatePP(curve: CurvePointList, acc: number, stars: number, s
         stars
     };
 }
+
+export function calculateStars(curve: CurvePointList, acc: number, targetPP: number, starMultiplier = defaultStarMultiplier): CalculationResult {
+    const modifier = findPPModifier(acc, curve); //curve.find((x) => x[0] <= acc)[1];
+    const stars = targetPP / starMultiplier / modifier;
+    const ppValue = stars * starMultiplier;
+
+    return {
+        pp: targetPP,
+        ppValue,
+        acc,
+        stars
+    };
+}

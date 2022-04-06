@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { calculatePP } from '$lib/pp/calculator';
+    import { calculateStars } from '$lib/pp/calculator';
     import type { Curve } from '$lib/pp/curves';
     import NumberSpinnerInput from './NumberSpinnerInput.svelte';
 
-    let starRating: number = 7;
+    let targetPP: number = 300;
     let acc = 95;
 
     export let curve: Curve;
@@ -23,19 +23,19 @@
 
         <div class="stat">
             <div class="stat-figure text-primary" />
-            <div class="stat-title">Star rating ★</div>
+            <div class="stat-title">Target performance points</div>
 
             <div class="stat-value">
-                <NumberSpinnerInput bind:value={starRating} min="0" max="10000" />
+                <NumberSpinnerInput bind:value={targetPP} spinnerValue={10} min="0" />
             </div>
         </div>
 
         <div class="stat">
             <div class="stat-figure text-primary" />
-            <div class="stat-title">Performance Points</div>
+            <div class="stat-title">Star rating</div>
 
             <div class="stat-value text-primary">
-                {calculatePP(curve.points, acc, starRating, starMultiplier).pp.toFixed(2)}
+                {calculateStars(curve.points, acc, targetPP, starMultiplier).stars.toFixed(2)} ★
             </div>
         </div>
     </div>

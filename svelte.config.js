@@ -10,7 +10,7 @@ const config = {
 
     kit: {
         adapter: adapter({
-            fallback: null
+            fallback: '200.html'
         }),
 
         // Override http methods in the Todo forms
