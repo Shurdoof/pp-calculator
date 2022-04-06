@@ -4,23 +4,50 @@
     export let min: number | string | null = null;
     export let max: number | string | null = null;
     export let value: number | null = 1;
-    export let spinnerValue: number = 1;
+    export let step: number = 1;
 
     $: setValue = v => {
         value = clamp(v, parseNullableNumber(min), parseNullableNumber(max));
     };
 
-    $: handleSpinnerClick = (change: number) => {
-        setValue(value + change);
-    };
-
     $: handleBlur = e => {
         setValue(value);
+    };
+
+    let mouseDownValue: number | null = null;
+    let mouseDownChange: number | null = null;
+    let spinnerInterval: number | null = null;
+    let spinnerDelayTimeout: number | null = null;
+    $: handleMouseDown = (change: number) => {
+        mouseDownValue = value;
+        mouseDownChange = change;
+
+        spinnerDelayTimeout = window.setTimeout(() => {
+            if (!spinnerInterval) {
+                spinnerInterval = window.setInterval(() => setValue(value + change), 75);
+            }
+        }, 150);
+    };
+
+    $: handleMouseUp = () => {
+        if (spinnerDelayTimeout) {
+            window.clearTimeout(spinnerDelayTimeout);
+            spinnerDelayTimeout = null;
+        }
+
+        if (spinnerInterval) {
+            window.clearInterval(spinnerInterval);
+            spinnerInterval = null;
+        }
+
+        if (mouseDownChange && mouseDownValue == value) {
+            setValue(value + mouseDownChange);
+        }
     };
 </script>
 
 <div class="input-group">
-    <button class="btn btn-sm btn-square" on:click={e => handleSpinnerClick(-spinnerValue)}>-</button>
-    <input type="number" bind:value on:blur={handleBlur} class="input input-bordered input-sm" {min} {max} />
-    <button class="btn btn-sm btn-square" on:click={e => handleSpinnerClick(+spinnerValue)}>+</button>
+    <button class="btn btn-sm btn-square" on:mousedown={e => handleMouseDown(-step)} on:mouseup={handleMouseUp} on:mouseleave={handleMouseUp}>-</button>
+    <input type="number" bind:value on:blur={handleBlur} class="input input-bordered input-sm" {min} {max} {step} />
+    <button class="btn btn-sm btn-square" on:mousedown={e => handleMouseDown(+step)} on:mouseup={handleMouseUp} on:mouseleave={handleMouseUp}>+</button>
 </div>

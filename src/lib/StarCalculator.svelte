@@ -26,7 +26,7 @@
             <div class="stat-title">Target performance points</div>
 
             <div class="stat-value">
-                <NumberSpinnerInput bind:value={targetPP} spinnerValue={10} min="0" />
+                <NumberSpinnerInput bind:value={targetPP} step={10} min="0" />
             </div>
         </div>
 
