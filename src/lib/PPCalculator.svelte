@@ -2,13 +2,18 @@
     import { calculatePP } from '$lib/pp/calculator';
     import type { Curve } from '$lib/pp/curves';
     import NumberSpinnerInput from './NumberSpinnerInput.svelte';
+    import PpCalculationMeta from './PPCalculationMeta.svelte';
 
-    let starRating: number = 7;
-    let acc = 95;
+    export let starRating: number;
+    export let acc: number;
 
     export let curve: Curve;
     export let starMultiplier: number;
+
+    $: calculation = calculatePP(curve, acc, starRating, starMultiplier);
 </script>
+
+<PpCalculationMeta {calculation} />
 
 <div>
     <div class="stats bg-base-200">
@@ -35,7 +40,7 @@
             <div class="stat-title">Performance Points</div>
 
             <div class="stat-value text-primary">
-                {calculatePP(curve.points, acc, starRating, starMultiplier).pp.toFixed(2)}
+                {calculation.pp.toFixed(2)}
             </div>
         </div>
     </div>

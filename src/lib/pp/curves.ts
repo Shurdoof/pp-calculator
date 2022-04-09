@@ -2,11 +2,13 @@ export type CurvePoint = [number, number];
 export type CurvePointList = CurvePoint[];
 
 export interface Curve {
+    id?: string;
     name: string;
     points: CurvePointList;
 }
 
 export const fernCurve: Curve = {
+    id: 'fern',
     name: 'Fern (previous)',
     points: [
         [1, 1.5],
@@ -32,6 +34,7 @@ export const fernCurve: Curve = {
 };
 
 const duhhelRamenV5Curve: Curve = {
+    id: 'duhhelramenv5',
     name: 'DuhhelRamenV5™ (current)',
     points: [
         [1, 7],
@@ -68,5 +71,9 @@ const duhhelRamenV5Curve: Curve = {
         [0.0, 0.0]
     ]
 };
+
+export function getCurveById(id: string) {
+    return curves.find(x => x.id === id);
+}
 
 export const curves = [duhhelRamenV5Curve, fernCurve];

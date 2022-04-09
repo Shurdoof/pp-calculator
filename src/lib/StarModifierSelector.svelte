@@ -6,12 +6,21 @@
         { name: 'Hitbloq', value: 50 }
     ];
 
-    let selectValue: Value = builtInValues[0].value;
+    let selectValue: Value;
     let customValue: number = 50;
-
     export let value: number;
 
     $: value = selectValue === 'custom' ? customValue : selectValue;
+
+    if (value !== undefined) {
+        const initialBuiltInValue = builtInValues.find(x => x.value === value);
+        if (initialBuiltInValue) {
+            selectValue = initialBuiltInValue.value;
+        } else {
+            selectValue = 'custom';
+            customValue = value;
+        }
+    }
 </script>
 
 <div class="input-group">

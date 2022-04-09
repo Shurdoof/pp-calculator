@@ -30,9 +30,9 @@ export function parseCurve(name: string, pointsData: string): Curve {
 export type PointListDisplayDirection = 'asc' | 'desc';
 
 export interface StringifyCurveOptions {
-    direction: PointListDisplayDirection;
-    pretty: boolean;
-    includeMetadata: boolean;
+    direction?: PointListDisplayDirection;
+    pretty?: boolean;
+    includeMetadata?: boolean;
 }
 
 export class StringifyCurveOptions {

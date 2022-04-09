@@ -42,6 +42,8 @@
 
         if (mouseDownChange && mouseDownValue == value) {
             setValue(value + mouseDownChange);
+            mouseDownValue = null;
+            mouseDownChange = null;
         }
     };
 </script>

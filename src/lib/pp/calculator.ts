@@ -1,5 +1,5 @@
 import { clamp } from '$lib/utils/numbers';
-import type { CurvePoint, CurvePointList } from './curves';
+import type { Curve, CurvePoint, CurvePointList } from './curves';
 const defaultStarMultiplier = 42.11;
 
 function lerp(v0: number, v1: number, t: number) {
@@ -30,11 +30,12 @@ export interface CalculationResult {
     stars: number;
     acc: number;
     ppValue: number;
+    curve: Curve;
 }
 
-export function calculatePP(curve: CurvePointList, acc: number, stars: number, starMultiplier = defaultStarMultiplier): CalculationResult {
+export function calculatePP(curve: Curve, acc: number, stars: number, starMultiplier = defaultStarMultiplier): CalculationResult {
     const ppValue = stars * starMultiplier;
-    const modifier = findPPModifier(acc, curve); //curve.find((x) => x[0] <= acc)[1];
+    const modifier = findPPModifier(acc, curve.points); //curve.find((x) => x[0] <= acc)[1];
 
     const pp = modifier * ppValue;
 
@@ -42,12 +43,13 @@ export function calculatePP(curve: CurvePointList, acc: number, stars: number, s
         pp,
         ppValue,
         acc,
-        stars
+        stars,
+        curve
     };
 }
 
-export function calculateStars(curve: CurvePointList, acc: number, targetPP: number, starMultiplier = defaultStarMultiplier): CalculationResult {
-    const modifier = findPPModifier(acc, curve); //curve.find((x) => x[0] <= acc)[1];
+export function calculateStars(curve: Curve, acc: number, targetPP: number, starMultiplier = defaultStarMultiplier): CalculationResult {
+    const modifier = findPPModifier(acc, curve.points); //curve.find((x) => x[0] <= acc)[1];
     const stars = targetPP / starMultiplier / modifier;
     const ppValue = stars * starMultiplier;
 
@@ -55,6 +57,7 @@ export function calculateStars(curve: CurvePointList, acc: number, targetPP: num
         pp: targetPP,
         ppValue,
         acc,
-        stars
+        stars,
+        curve
     };
 }

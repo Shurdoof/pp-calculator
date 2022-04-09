@@ -1,14 +1,21 @@
 <script lang="ts">
+    import { page } from '$app/stores';
+
     import { calculateStars } from '$lib/pp/calculator';
     import type { Curve } from '$lib/pp/curves';
     import NumberSpinnerInput from './NumberSpinnerInput.svelte';
+    import PpCalculationMeta from './PPCalculationMeta.svelte';
 
-    let targetPP: number = 300;
-    let acc = 95;
+    export let targetPP: number;
+    export let acc: number;
 
     export let curve: Curve;
     export let starMultiplier: number;
+
+    $: calculation = calculateStars(curve, acc, targetPP, starMultiplier);
 </script>
+
+<PpCalculationMeta {calculation} />
 
 <div>
     <div class="stats bg-base-200">
@@ -35,7 +42,7 @@
             <div class="stat-title">Star rating</div>
 
             <div class="stat-value text-primary">
-                {calculateStars(curve.points, acc, targetPP, starMultiplier).stars.toFixed(2)} ★
+                {calculation.stars.toFixed(2)} ★
             </div>
         </div>
     </div>

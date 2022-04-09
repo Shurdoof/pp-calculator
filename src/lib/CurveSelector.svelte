@@ -4,7 +4,8 @@
     import { addUserCurve, getUserCurves, removeUserCurve } from './pp/userCurves';
 
     let userCurves = getUserCurves();
-    export let value: Curve = curves[0];
+    export let temporaryCurves: Curve[] = [];
+    export let value: Curve;
 
     let customCurveName: string = 'New curve';
     let customCurveData: string = '';
@@ -51,6 +52,16 @@
         {#if userCurves.length}
             <optgroup label="User">
                 {#each userCurves as curve}
+                    <option value={curve}>
+                        {curve.name}
+                    </option>
+                {/each}
+            </optgroup>
+        {/if}
+
+        {#if temporaryCurves.length}
+            <optgroup label="Temporary">
+                {#each temporaryCurves as curve}
                     <option value={curve}>
                         {curve.name}
                     </option>

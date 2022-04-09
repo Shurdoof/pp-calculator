@@ -42,7 +42,7 @@
                             class:hover={starRating === currentHover?.starRating && acc === currentHover?.acc}
                             class:highlight={starRating === currentHover?.starRating || acc === currentHover?.acc}
                             on:mouseenter={e => (currentHover = { starRating, acc })}
-                            on:mouseleave={e => (currentHover = null)}>{calculatePP(curve.points, acc, starRating, starMultiplier).pp.toFixed(2)}</td
+                            on:mouseleave={e => (currentHover = null)}>{calculatePP(curve, acc, starRating, starMultiplier).pp.toFixed(2)}</td
                         >
                     {/each}
 

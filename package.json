@@ -1,7 +1,12 @@
 {
     "name": "pp-calculator",
     "version": "0.0.1",
+    "engines": {
+        "npm": ">=7.0.0",
+        "node": ">=16.0.0"
+    },
     "scripts": {
+        "start": "npm run build && node build/index.js",
         "dev": "svelte-kit dev",
         "build": "svelte-kit build",
         "package": "svelte-kit package",
@@ -14,6 +19,7 @@
     },
     "devDependencies": {
         "@sveltejs/adapter-auto": "next",
+        "@sveltejs/adapter-node": "^1.0.0-next.73",
         "@sveltejs/adapter-static": "^1.0.0-next.29",
         "@sveltejs/kit": "next",
         "@types/cookie": "^0.4.1",
@@ -37,6 +43,7 @@
     "dependencies": {
         "@fontsource/fira-mono": "^4.5.0",
         "@lukeed/uuid": "^2.0.0",
+        "buffer": "^6.0.3",
         "cookie": "^0.4.1",
         "daisyui": "^2.13.5"
     }
