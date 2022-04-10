@@ -1,10 +1,7 @@
 <script lang="ts">
-    type Value = number | 'custom';
+    import { builtInStarMultipliers } from './pp/calculator';
 
-    const builtInValues = [
-        { name: 'ScoreSaber', value: 42.11 },
-        { name: 'Hitbloq', value: 50 }
-    ];
+    type Value = number | 'custom';
 
     let selectValue: Value;
     let customValue: number = 50;
@@ -13,7 +10,7 @@
     $: value = selectValue === 'custom' ? customValue : selectValue;
 
     if (value !== undefined) {
-        const initialBuiltInValue = builtInValues.find(x => x.value === value);
+        const initialBuiltInValue = builtInStarMultipliers.find(x => x.value === value);
         if (initialBuiltInValue) {
             selectValue = initialBuiltInValue.value;
         } else {
@@ -29,7 +26,7 @@
     </span>
 
     <select bind:value={selectValue} class="select select-bordered">
-        {#each builtInValues as item}
+        {#each builtInStarMultipliers as item}
             <option value={item.value}>
                 {item.value} ({item.name})
             </option>

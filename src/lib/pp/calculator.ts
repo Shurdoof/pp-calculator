@@ -1,6 +1,11 @@
 import { clamp } from '$lib/utils/numbers';
 import type { Curve, CurvePoint, CurvePointList } from './curves';
-const defaultStarMultiplier = 42.11;
+
+export const builtInStarMultipliers = [
+    { name: 'ScoreSaber', value: 42.11 },
+    { name: 'Hitbloq', value: 50 }
+];
+const defaultStarMultiplier = builtInStarMultipliers[0].value;
 
 function lerp(v0: number, v1: number, t: number) {
     // return (1 - t) * v0 + t * v1;
@@ -31,6 +36,8 @@ export interface CalculationResult {
     acc: number;
     ppValue: number;
     curve: Curve;
+    starMultiplier: number;
+    calculationType: 'stars' | 'pp';
 }
 
 export function calculatePP(curve: Curve, acc: number, stars: number, starMultiplier = defaultStarMultiplier): CalculationResult {
@@ -44,7 +51,9 @@ export function calculatePP(curve: Curve, acc: number, stars: number, starMultip
         ppValue,
         acc,
         stars,
-        curve
+        curve,
+        starMultiplier,
+        calculationType: 'pp'
     };
 }
 
@@ -58,6 +67,8 @@ export function calculateStars(curve: Curve, acc: number, targetPP: number, star
         ppValue,
         acc,
         stars,
-        curve
+        curve,
+        starMultiplier,
+        calculationType: 'stars'
     };
 }
