@@ -4,7 +4,12 @@
 
 <header>
     <div class="navbar bg-base-300">
-        <a sveltekit:prefetch href="/" class="btn btn-ghost normal-case text-xl">PP Calculator</a>
+        <div class="flex-1">
+            <a sveltekit:prefetch href="/" class="btn btn-ghost normal-case text-xl">PP Calculator</a>
+        </div>
+        <div class="flex-none">
+            <a href="https://github.com/Shurdoof/pp-calculator" rel="external" class="btn btn-ghost normal-case" target="_blank">GitHub</a>
+        </div>
     </div>
 
     <!-- <nav>
