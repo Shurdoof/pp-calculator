@@ -1,15 +1,13 @@
 <script context="module" lang="ts">
-    export async function load(ctx) {
-        let data = ctx.params;
-
-        if (data.mode !== 'pp' && data.mode !== 'stars') {
+    export async function load({ params }) {
+        if (params.mode !== 'pp' && params.mode !== 'stars') {
             return {
                 status: 302,
                 redirect: '/calculator'
             };
         }
 
-        return { props: { mode: data.mode } };
+        return { props: { mode: params.mode } };
     }
 </script>
 
@@ -17,24 +15,16 @@
     import CurveSelector from '$lib/CurveSelector.svelte';
     import PpCalculator from '$lib/PPCalculator.svelte';
     import PpMatrix from '$lib/PPMatrix.svelte';
-    import { curves, getCurveById, type Curve } from '$lib/pp/curves';
+    import { curves, getCurveById, getInitialCurve, type Curve } from '$lib/pp/curves';
     import StarModifierSelector from '$lib/StarModifierSelector.svelte';
     import StarCalculator from '$lib/StarCalculator.svelte';
     import StarMatrix from '$lib/StarMatrix.svelte';
     import { page } from '$app/stores';
     import { parseNullableNumber } from '$lib/utils/numbers';
-    import { fromBase64Safe, toBase64Safe } from '$lib/utils/base64';
+    import { toBase64Safe } from '$lib/utils/base64';
     import { stringifyCurve } from '$lib/pp/parser';
     import ShareButton from '$lib/ShareButton.svelte';
-
-    interface QueryParams {
-        acc?: number; //acc
-        sr?: number; //starRating
-        pp?: number; //targetPP
-        sv?: number; //starValue
-        c?: string; //curve
-    }
-    type CalculatorMode = 'pp' | 'stars';
+    import type { CalculatorMode, QueryParams } from './_types';
 
     function parseQueryStringNumber(value: string, defaultValue?: number) {
         const result = parseNullableNumber(value);
@@ -46,31 +36,6 @@
         return result;
     }
 
-    function parseQueryStringCurve(value: string | undefined) {
-        if (!value) {
-            return;
-        }
-
-        try {
-            const curveJson = fromBase64Safe(value);
-            const parsedCurve = JSON.parse(curveJson);
-
-            if (parsedCurve && Array.isArray(parsedCurve.points)) {
-                return parsedCurve;
-            }
-        } catch (e) {
-            console.warn('Failed to parse curve parameter', e);
-        }
-    }
-
-    function getInitialCurve(value: string | undefined): Curve {
-        const defaultCurve = curves[0];
-        if (!value) {
-            return defaultCurve;
-        }
-
-        return getCurveById(value) || parseQueryStringCurve(value) || defaultCurve;
-    }
     function getQueryValue(...keys: (keyof QueryParams)[]) {
         for (const key of keys) {
             const value = query.get(key);

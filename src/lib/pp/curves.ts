@@ -1,3 +1,5 @@
+import { fromBase64Safe } from '$lib/utils/base64';
+
 export type CurvePoint = [number, number];
 export type CurvePointList = CurvePoint[];
 
@@ -74,6 +76,31 @@ const duhhelRamenV5Curve: Curve = {
 
 export function getCurveById(id: string) {
     return curves.find(x => x.id === id);
+}
+
+export function parseQueryStringCurve(value: string | undefined) {
+    if (!value) {
+        return;
+    }
+
+    try {
+        const curveJson = fromBase64Safe(value);
+        const parsedCurve = JSON.parse(curveJson);
+
+        if (parsedCurve && Array.isArray(parsedCurve.points)) {
+            return parsedCurve;
+        }
+    } catch (e) {
+        console.warn('Failed to parse curve parameter', e);
+    }
+}
+
+export function getInitialCurve(value: string | undefined, defaultCurve = curves[0]): Curve {
+    if (!value) {
+        return defaultCurve;
+    }
+
+    return getCurveById(value) || parseQueryStringCurve(value) || defaultCurve;
 }
 
 export const curves = [duhhelRamenV5Curve, fernCurve];

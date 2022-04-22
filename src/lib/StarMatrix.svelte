@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Curve } from '$lib/pp/curves';
-    import { calculatePP, calculateStars } from '$lib/pp/calculator';
+    import { calculateStars } from '$lib/pp/calculator';
     import { generateRangeArray } from './utils/numbers';
 
     type HoverState = { starRating: number; acc: number };
