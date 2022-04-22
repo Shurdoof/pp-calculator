@@ -25,7 +25,7 @@
         <span class="label-text">Star value</span>
     </span>
 
-    <select bind:value={selectValue} class="select select-bordered">
+    <select bind:value={selectValue} class="select select-bordered flex-1 w-1 md:w-auto md:flex-initial">
         {#each builtInStarMultipliers as item}
             <option value={item.value}>
                 {item.value} ({item.name})

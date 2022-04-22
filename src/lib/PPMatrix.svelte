@@ -28,7 +28,7 @@
                 {#each starRange as starRating}
                     <th class:highlight={starRating === currentHover?.starRating}>{starRating} ★</th>
                 {/each}
-                <th />
+                <th class="hidden md:table-cell" />
             </tr>
         </thead>
         <tbody>
@@ -46,7 +46,7 @@
                         >
                     {/each}
 
-                    <th class:highlight={acc === currentHover?.acc}>
+                    <th class:highlight={acc === currentHover?.acc} class="hidden md:table-cell">
                         {acc}%
                     </th>
                 </tr>
@@ -59,7 +59,7 @@
                 {#each starRange as starRating}
                     <th class:highlight={starRating === currentHover?.starRating}>{starRating} ★</th>
                 {/each}
-                <th />
+                <th class="hidden md:table-cell" />
             </tr>
         </tfoot>
     </table>

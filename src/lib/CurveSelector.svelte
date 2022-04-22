@@ -64,46 +64,50 @@
     };
 </script>
 
-<div class="input-group">
-    <span class="label">
-        <span class="label-text">Curve</span>
-    </span>
+<div class="form-control md:inline-flex mb-2 md:mb-0">
+    <div class="input-group">
+        <span class="label">
+            <span class="label-text">Curve</span>
+        </span>
 
-    <select bind:value class="select select-bordered">
-        <optgroup label="Built-in">
-            {#each curves as curve}
-                <option value={curve}>
-                    {curve.name}
-                </option>
-            {/each}
-        </optgroup>
-
-        {#if userCurves.length}
-            <optgroup label="Local">
-                {#each userCurves as curve}
+        <select bind:value class="select select-bordered flex-1 w-1 md:w-auto md:flex-initial">
+            <optgroup label="Built-in">
+                {#each curves as curve}
                     <option value={curve}>
                         {curve.name}
                     </option>
                 {/each}
             </optgroup>
-        {/if}
 
-        {#if temporaryCurves.length}
-            <optgroup label="Temporary">
-                {#each temporaryCurves as curve}
-                    <option value={curve}>
-                        {curve.name}
-                    </option>
-                {/each}
-            </optgroup>
-        {/if}
-    </select>
+            {#if userCurves.length}
+                <optgroup label="Local">
+                    {#each userCurves as curve}
+                        <option value={curve}>
+                            {curve.name}
+                        </option>
+                    {/each}
+                </optgroup>
+            {/if}
 
-    <a href="#show-curve" class="btn">Curve details</a>
+            {#if temporaryCurves.length}
+                <optgroup label="Temporary">
+                    {#each temporaryCurves as curve}
+                        <option value={curve}>
+                            {curve.name}
+                        </option>
+                    {/each}
+                </optgroup>
+            {/if}
+        </select>
+    </div>
+</div>
+
+<div class="md:inline-flex">
+    <a href="#show-curve" class="btn m-1">Curve details</a>
     {#if selectedCurveType === 'local'}
-        <a href="#delete-curve" class="btn">Delete curve</a>
+        <a href="#delete-curve" class="btn m-1">Delete curve</a>
     {/if}
-    <a href="#add-curve" class="btn" on:click={resetDialog}>Add curve</a>
+    <a href="#add-curve" class="btn m-1" on:click={resetDialog}>Add curve</a>
 </div>
 
 <div class="modal" id="add-curve">

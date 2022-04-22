@@ -19,7 +19,7 @@
     }
 </script>
 
-<a href="#share" class="btn btn-lg">Share</a>
+<a href="#share" class="btn btn-lg my-2">Share</a>
 
 <div class="modal" id="share">
     <div class="modal-box">
@@ -34,6 +34,11 @@
                 {/if}
             </button>
         </div>
+        <!-- <p class="mt-4">
+
+            This link will direct to this page with the current parameters, including custom curves.<br />
+            It will also show the calculation result in the preview if posted in Discord.
+        </p> -->
         <div class="modal-action">
             <a href={'#'} class="btn w-20">Close</a>
         </div>

@@ -18,7 +18,7 @@
 <PpCalculationMeta {calculation} />
 
 <div>
-    <div class="stats bg-base-200">
+    <div class="stats stats-vertical w-full md:stats-horizontal md:w-auto bg-base-200">
         <div class="stat">
             <div class="stat-figure text-primary" />
             <div class="stat-title">Accuracy %</div>

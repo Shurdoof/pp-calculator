@@ -141,7 +141,7 @@
     </div>
 
     {#if mode === 'pp'}
-        <div class="flex justify-between">
+        <div class="md:flex justify-between items-center">
             <PpCalculator {curve} starMultiplier={starValue} bind:acc bind:starRating />
             <ShareButton link={generatePermalink()} />
         </div>
@@ -150,7 +150,7 @@
     {/if}
 
     {#if mode === 'stars'}
-        <div class="flex justify-between">
+        <div class="md:flex justify-between">
             <StarCalculator {curve} starMultiplier={starValue} bind:acc bind:targetPP />
             <ShareButton link={generatePermalink()} />
         </div>
