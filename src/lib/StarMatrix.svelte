@@ -29,7 +29,7 @@
                 {#each ppRange as pp}
                     <th class:highlight={pp === currentHover?.starRating}>{pp}pp</th>
                 {/each}
-                <th />
+                <th class="hidden md:table-cell" />
             </tr>
         </thead>
         <tbody>
@@ -47,7 +47,7 @@
                         >
                     {/each}
 
-                    <th class:highlight={acc === currentHover?.acc}>
+                    <th class:highlight={acc === currentHover?.acc} class="hidden md:table-cell">
                         {acc}%
                     </th>
                 </tr>
@@ -60,7 +60,7 @@
                 {#each ppRange as pp}
                     <th class:highlight={pp === currentHover?.starRating}>{pp}pp</th>
                 {/each}
-                <th />
+                <th class="hidden md:table-cell" />
             </tr>
         </tfoot>
     </table>
