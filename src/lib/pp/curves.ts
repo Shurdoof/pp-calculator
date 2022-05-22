@@ -11,7 +11,7 @@ export interface Curve {
 
 export const fernCurve: Curve = {
     id: 'fern',
-    name: 'Fern (previous)',
+    name: 'Fern (before reweight 2)',
     points: [
         [1, 1.5],
         [0.99, 1.39],
@@ -37,7 +37,7 @@ export const fernCurve: Curve = {
 
 const duhhelRamenV5Curve: Curve = {
     id: 'duhhelramenv5',
-    name: 'DuhhelRamenV5™ (current)',
+    name: 'DuhhelRamenV5™ (reweight 2/3)',
     points: [
         [1, 7],
         [0.999, 5.8],
@@ -56,6 +56,45 @@ const duhhelRamenV5Curve: Curve = {
         [0.965, 1.2],
         [0.96, 1.11],
         [0.955, 1.045],
+        [0.95, 1],
+        [0.94, 0.94],
+        [0.93, 0.885],
+        [0.92, 0.835],
+        [0.91, 0.79],
+        [0.9, 0.75],
+        [0.875, 0.655],
+        [0.85, 0.57],
+        [0.825, 0.51],
+        [0.8, 0.47],
+        [0.75, 0.4],
+        [0.7, 0.34],
+        [0.65, 0.29],
+        [0.6, 0.25],
+        [0.0, 0.0]
+    ]
+};
+
+const duhhelRamenV6Curve: Curve = {
+    id: 'duhhelramenv6',
+    name: 'DuhhelRamenV6™ (current)',
+    points: [
+        [1, 7],
+        [0.999, 6.24],
+        [0.9975, 5.31],
+        [0.995, 4.14],
+        [0.9925, 3.31],
+        [0.99, 2.73],
+        [0.9875, 2.31],
+        [0.985, 2.0],
+        [0.9825, 1.775],
+        [0.98, 1.625],
+        [0.9775, 1.515],
+        [0.975, 1.43],
+        [0.9725, 1.36],
+        [0.97, 1.3],
+        [0.965, 1.195],
+        [0.96, 1.115],
+        [0.955, 1.05],
         [0.95, 1],
         [0.94, 0.94],
         [0.93, 0.885],
@@ -103,4 +142,4 @@ export function getInitialCurve(value: string | undefined, defaultCurve = curves
     return getCurveById(value) || parseQueryStringCurve(value) || defaultCurve;
 }
 
-export const curves = [duhhelRamenV5Curve, fernCurve];
+export const curves = [duhhelRamenV6Curve, duhhelRamenV5Curve, fernCurve];
