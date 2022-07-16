@@ -1,16 +1,16 @@
 <script lang="ts">
-    import { calculatePP } from '$lib/pp/calculator';
+    import { calculateStars } from '$lib/pp/calculator';
     import type { Curve } from '$lib/pp/curves';
     import NumberSpinnerInput from './NumberSpinnerInput.svelte';
     import PpCalculationMeta from './PPCalculationMeta.svelte';
 
-    export let starRating: number;
+    export let targetPP: number;
     export let acc: number;
 
     export let curve: Curve;
     export let starMultiplier: number;
 
-    $: calculation = calculatePP(curve, acc, starRating, starMultiplier);
+    $: calculation = calculateStars(curve, acc, targetPP, starMultiplier);
 </script>
 
 <PpCalculationMeta {calculation} />
@@ -28,19 +28,19 @@
 
         <div class="stat">
             <div class="stat-figure text-primary" />
-            <div class="stat-title">Star rating ★</div>
+            <div class="stat-title">Target performance points</div>
 
             <div class="stat-value">
-                <NumberSpinnerInput bind:value={starRating} min="0" max="10000" />
+                <NumberSpinnerInput bind:value={targetPP} step={10} min="0" />
             </div>
         </div>
 
         <div class="stat">
             <div class="stat-figure text-primary" />
-            <div class="stat-title">Performance Points</div>
+            <div class="stat-title">Star rating</div>
 
             <div class="stat-value text-primary">
-                {calculation.pp.toFixed(2)}
+                {calculation.stars.toFixed(2)} ★
             </div>
         </div>
     </div>

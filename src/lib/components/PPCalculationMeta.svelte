@@ -1,7 +1,6 @@
 <script lang="ts">
     import { page } from '$app/stores';
-
-    import { builtInStarMultipliers, type CalculationResult } from './pp/calculator';
+    import { builtInStarMultipliers, type CalculationResult } from '$lib/pp/calculator';
 
     export let calculation: CalculationResult;
 

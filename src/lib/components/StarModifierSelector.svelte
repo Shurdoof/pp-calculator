@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { builtInStarMultipliers } from './pp/calculator';
+    import { builtInStarMultipliers } from '$lib/pp/calculator';
 
     type Value = number | 'custom';
 

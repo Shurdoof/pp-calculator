@@ -1,24 +1,23 @@
 <script lang="ts">
     import type { Curve } from '$lib/pp/curves';
-    import { calculateStars } from '$lib/pp/calculator';
-    import { generateRangeArray } from './utils/numbers';
+    import { calculatePP } from '$lib/pp/calculator';
+    import { generateRangeArray } from '$lib/utils/numbers';
 
     type HoverState = { starRating: number; acc: number };
 
     export let curve: Curve;
     export let starMultiplier: number;
 
-    export let ppMin = 50;
-    export let ppMax = 1000;
-    export let ppStep = 50;
+    export let starsMin = 1;
+    export let starsMax = 20;
 
     export let accMin = 85;
     export let accMax = 100;
 
-    let currentHover: HoverState | null = null;
-
     $: accRange = generateRangeArray(accMin, accMax);
-    $: ppRange = generateRangeArray(ppMin, ppMax, ppStep);
+    $: starRange = generateRangeArray(starsMin, starsMax);
+
+    let currentHover: HoverState | null = null;
 </script>
 
 <div class="overflow-x-auto">
@@ -26,8 +25,8 @@
         <thead>
             <tr>
                 <th />
-                {#each ppRange as pp}
-                    <th class:highlight={pp === currentHover?.starRating}>{pp}pp</th>
+                {#each starRange as starRating}
+                    <th class:highlight={starRating === currentHover?.starRating}>{starRating} ★</th>
                 {/each}
                 <th class="hidden md:table-cell" />
             </tr>
@@ -38,12 +37,12 @@
                     <th class:highlight={acc === currentHover?.acc}>
                         {acc}%
                     </th>
-                    {#each ppRange as pp}
+                    {#each starRange as starRating}
                         <td
-                            class:hover={pp === currentHover?.starRating && acc === currentHover?.acc}
-                            class:highlight={pp === currentHover?.starRating || acc === currentHover?.acc}
-                            on:mouseenter={e => (currentHover = { starRating: pp, acc })}
-                            on:mouseleave={e => (currentHover = null)}>{calculateStars(curve, acc, pp, starMultiplier).stars.toFixed(2)} ★</td
+                            class:hover={starRating === currentHover?.starRating && acc === currentHover?.acc}
+                            class:highlight={starRating === currentHover?.starRating || acc === currentHover?.acc}
+                            on:mouseenter={e => (currentHover = { starRating, acc })}
+                            on:mouseleave={e => (currentHover = null)}>{calculatePP(curve, acc, starRating, starMultiplier).pp.toFixed(2)}</td
                         >
                     {/each}
 
@@ -57,8 +56,8 @@
         <tfoot>
             <tr>
                 <th />
-                {#each ppRange as pp}
-                    <th class:highlight={pp === currentHover?.starRating}>{pp}pp</th>
+                {#each starRange as starRating}
+                    <th class:highlight={starRating === currentHover?.starRating}>{starRating} ★</th>
                 {/each}
                 <th class="hidden md:table-cell" />
             </tr>
@@ -74,7 +73,6 @@
     .pp-matrix th {
         width: 70px;
         text-align: right;
-        text-transform: none;
     }
 
     .pp-matrix th {

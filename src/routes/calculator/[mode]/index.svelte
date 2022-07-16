@@ -12,18 +12,18 @@
 </script>
 
 <script lang="ts">
-    import CurveSelector from '$lib/CurveSelector.svelte';
-    import PpCalculator from '$lib/PPCalculator.svelte';
-    import PpMatrix from '$lib/PPMatrix.svelte';
+    import CurveSelector from '$lib/components/CurveSelector.svelte';
+    import PpCalculator from '$lib/components/PPCalculator.svelte';
+    import PpMatrix from '$lib/components/PPMatrix.svelte';
+    import StarModifierSelector from '$lib/components/StarModifierSelector.svelte';
+    import StarCalculator from '$lib/components/StarCalculator.svelte';
+    import StarMatrix from '$lib/components/StarMatrix.svelte';
+    import ShareButton from '$lib/components/ShareButton.svelte';
     import { curves, getCurveById, getInitialCurve, type Curve } from '$lib/pp/curves';
-    import StarModifierSelector from '$lib/StarModifierSelector.svelte';
-    import StarCalculator from '$lib/StarCalculator.svelte';
-    import StarMatrix from '$lib/StarMatrix.svelte';
     import { page } from '$app/stores';
     import { parseNullableNumber } from '$lib/utils/numbers';
     import { toBase64Safe } from '$lib/utils/base64';
     import { stringifyCurve } from '$lib/pp/parser';
-    import ShareButton from '$lib/ShareButton.svelte';
     import type { CalculatorMode, QueryParams } from './_types';
 
     function parseQueryStringNumber(value: string, defaultValue?: number) {

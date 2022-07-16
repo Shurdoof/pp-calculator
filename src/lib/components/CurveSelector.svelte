@@ -1,7 +1,7 @@
 <script lang="ts">
     import { curves, type Curve } from '$lib/pp/curves';
-    import { parseCurve, stringifyCurve, StringifyCurveOptions } from './pp/parser';
-    import { addUserCurve, getUserCurves, removeUserCurve } from './pp/userCurves';
+    import { parseCurve, stringifyCurve, StringifyCurveOptions } from '$lib/pp/parser';
+    import { addUserCurve, getUserCurves, removeUserCurve } from '$lib/pp/userCurves';
 
     let userCurves = getUserCurves();
     export let temporaryCurves: Curve[] = [];

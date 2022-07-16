@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { clamp, parseNullableNumber } from './utils/numbers';
+    import { clamp, parseNullableNumber } from '$lib/utils/numbers';
 
     export let min: number | string | null = null;
     export let max: number | string | null = null;
@@ -53,3 +53,9 @@
     <input type="number" bind:value on:blur={handleBlur} class="input input-bordered input-sm" {min} {max} {step} />
     <button class="btn btn-sm btn-square" on:mousedown={e => handleMouseDown(+step)} on:mouseup={handleMouseUp} on:mouseleave={handleMouseUp}>+</button>
 </div>
+
+<style>
+    input {
+        font-weight: normal;
+    }
+</style>

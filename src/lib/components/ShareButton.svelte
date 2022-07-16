@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { updateClipboard } from './utils/clipboard';
+    import { updateClipboard } from '$lib/utils/clipboard';
 
     export let link: string;
     let copied = false;

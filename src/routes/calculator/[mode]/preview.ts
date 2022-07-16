@@ -25,6 +25,7 @@ async function createImage(calculation: CalculationResult) {
     const height = 110;
     const sectionSize = width / 3;
     const borderColor = '#2F2F2F';
+    const textColor = '#D4D4D4';
 
     const canvas = createCanvas(width, height);
     const ctx = canvas.getContext('2d');
@@ -62,7 +63,7 @@ async function createImage(calculation: CalculationResult) {
         ctx.beginPath();
         const startX = position * sectionSize;
 
-        ctx.fillStyle = '#D4D4D4';
+        ctx.fillStyle = textColor;
         setFontSize(20);
         ctx.fillText(title, startX + 10, 25);
         setFontSize(24);
@@ -75,7 +76,7 @@ async function createImage(calculation: CalculationResult) {
     const footer = (text: string) => {
         line(new Point(0, footerStart), new Point(width, footerStart));
         ctx.beginPath();
-        ctx.fillStyle = '#D4D4D4';
+        ctx.fillStyle = textColor;
         setFontSize(18);
         ctx.fillText(text, 10, footerStart + 26);
     };
