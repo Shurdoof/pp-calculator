@@ -7,6 +7,7 @@
 
     let title: string = 'PP calculator';
     let description: string = '';
+    let imageUrl = null;
 
     const isShareUrl = !!$page.url.search;
 
@@ -22,6 +23,8 @@
         title = `${calculation.acc}% on ${calculation.stars.toFixed(2)}★ is ${calculation.pp.toFixed(2)}pp`;
         description = `Curve: ${calculation.curve.name} ${isCustomCurve ? ' (custom)' : ''}
         Star value: ${calculation.starMultiplier.toFixed(2)} ${starMultiplierName ? `(${starMultiplierName})` : ''}`;
+
+        imageUrl = $page.url.origin + $page.url.pathname + '/preview' + $page.url.search;
     }
 </script>
 
@@ -31,4 +34,11 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://beatsaber.shurdoof.com" />
     <meta property="og:site_name" content="PP Calculator" />
+    {#if imageUrl}
+        <meta property="og:image" content={imageUrl} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="450" />
+        <meta property="og:image:height" content="110" />
+        <meta name="twitter:card" content="summary_large_image" />
+    {/if}
 </svelte:head>
