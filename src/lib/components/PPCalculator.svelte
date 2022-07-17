@@ -1,9 +1,11 @@
 <script lang="ts">
     import { calculatePP } from '$lib/pp/calculator';
     import type { Curve } from '$lib/pp/curves';
-    import CopyButton from './CopyButton.svelte';
+    import CalculatorButtons from './CalculatorButtons.svelte';
+    import CopyButton from './CopyImageButton.svelte';
     import NumberSpinnerInput from './NumberSpinnerInput.svelte';
     import PpCalculationMeta from './PPCalculationMeta.svelte';
+    import ShareButton from './ShareButton.svelte';
 
     export let starRating: number;
     export let acc: number;
@@ -42,5 +44,5 @@
             </div>
         </div>
     </div>
-    <CopyButton {calculation} />
+    <CalculatorButtons {calculation} />
 </div>

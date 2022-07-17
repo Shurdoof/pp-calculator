@@ -1,7 +1,12 @@
 <script lang="ts">
+    import type { CalculationResult } from '$lib/pp/calculator';
+    import { generatePermalink } from '$lib/pp/permalink';
     import { updateClipboard } from '$lib/utils/clipboard';
+    import { page } from '$app/stores';
 
-    export let link: string;
+    export let calculation: CalculationResult;
+    export let cssClass: string;
+    $: link = calculation ? generatePermalink(calculation, 'web', $page.url.origin) : '';
     let copied = false;
 
     function handleCopyClick(e) {
@@ -19,7 +24,7 @@
     }
 </script>
 
-<a href="#share" class="btn btn-lg my-2">Share</a>
+<a href="#share" class={cssClass}>Share</a>
 
 <div class="modal" id="share">
     <div class="modal-box">

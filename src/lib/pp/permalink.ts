@@ -5,7 +5,7 @@ import { stringifyCurve } from './parser';
 
 type LinkType = 'json' | 'image' | 'web';
 
-export function generatePermalink(calculation: CalculationResult, type: LinkType) {
+export function generatePermalink(calculation: CalculationResult, type: LinkType, baseUrl: string) {
     const isBuiltInCurve = calculation.curve.id && getCurveById(calculation.curve.id);
     const queryValues = {
         acc: calculation.acc,
@@ -28,7 +28,7 @@ export function generatePermalink(calculation: CalculationResult, type: LinkType
         }
     }
 
-    let url = `${window.location.origin}/calculator/${calculation.calculationType}`;
+    let url = `${baseUrl}/calculator/${calculation.calculationType}`;
 
     if (type !== 'web') {
         url += '/' + type;

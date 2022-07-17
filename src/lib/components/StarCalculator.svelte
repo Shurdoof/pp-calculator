@@ -1,7 +1,7 @@
 <script lang="ts">
     import { calculateStars } from '$lib/pp/calculator';
     import type { Curve } from '$lib/pp/curves';
-import CopyButton from './CopyButton.svelte';
+    import CalculatorButtons from './CalculatorButtons.svelte';
     import NumberSpinnerInput from './NumberSpinnerInput.svelte';
     import PpCalculationMeta from './PPCalculationMeta.svelte';
 
@@ -42,5 +42,5 @@ import CopyButton from './CopyButton.svelte';
             </div>
         </div>
     </div>
-    <CopyButton {calculation} />
+    <CalculatorButtons {calculation} />
 </div>

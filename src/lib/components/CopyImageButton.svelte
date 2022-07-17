@@ -1,13 +1,16 @@
 <script lang="ts">
     import type { CalculationResult } from '$lib/pp/calculator';
     import { generatePermalink } from '$lib/pp/permalink';
+    import { page } from '$app/stores';
 
     export let calculation: CalculationResult;
+    export let cssClass: string;
+
     let loading = false;
     let copied = false;
 
     $: handleClick = async () => {
-        const url = generatePermalink(calculation, 'image');
+        const url = generatePermalink(calculation, 'image', $page.url.origin);
 
         loading = true;
 
@@ -28,16 +31,10 @@
     };
 </script>
 
-<button class="btn btn-sm" class:loading on:click={handleClick} disabled={loading}>
+<button class={cssClass} class:loading on:click={handleClick} disabled={loading}>
     {#if copied}
         Copied!
     {:else}
-        Copy
+        Copy image
     {/if}
 </button>
-
-<style>
-    button {
-        vertical-align: top;
-    }
-</style>

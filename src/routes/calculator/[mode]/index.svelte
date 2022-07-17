@@ -18,12 +18,9 @@
     import StarModifierSelector from '$lib/components/StarModifierSelector.svelte';
     import StarCalculator from '$lib/components/StarCalculator.svelte';
     import StarMatrix from '$lib/components/StarMatrix.svelte';
-    import ShareButton from '$lib/components/ShareButton.svelte';
-    import { curves, getCurveById, getInitialCurve, type Curve } from '$lib/pp/curves';
+    import { curves, getInitialCurve, type Curve } from '$lib/pp/curves';
     import { page } from '$app/stores';
     import { parseNullableNumber } from '$lib/utils/numbers';
-    import { toBase64Safe } from '$lib/utils/base64';
-    import { stringifyCurve } from '$lib/pp/parser';
     import type { CalculatorMode, QueryParams } from './_types';
 
     function parseQueryStringNumber(value: string, defaultValue?: number) {
@@ -60,32 +57,6 @@
     if (!curves.includes(curve)) {
         tempCurves.push(curve);
     }
-
-    $: generatePermalink = () => {
-        const isBuiltInCurve = curve.id && getCurveById(curve.id);
-        const queryValues: QueryParams = {
-            acc,
-            sr: starRating,
-            pp: targetPP,
-            sv: starValue,
-            c: isBuiltInCurve ? curve.id : toBase64Safe(stringifyCurve(curve, { pretty: false, includeMetadata: true }))
-        };
-
-        if (mode === 'pp') {
-            delete queryValues.pp;
-        } else if (mode === 'stars') {
-            delete queryValues.sr;
-        }
-
-        const params = new URLSearchParams();
-        for (const key of Object.keys(queryValues)) {
-            if (queryValues[key] != null) {
-                params.set(key, queryValues[key]);
-            }
-        }
-
-        return `${$page.url.protocol}//${$page.url.host}${$page.url.pathname}?${params.toString()}`;
-    };
 </script>
 
 <svelte:head>
@@ -108,7 +79,6 @@
     {#if mode === 'pp'}
         <div class="md:flex justify-between items-center">
             <PpCalculator {curve} starMultiplier={starValue} bind:acc bind:starRating />
-            <ShareButton link={generatePermalink()} />
         </div>
         <div class="divider" />
         <PpMatrix {curve} starMultiplier={starValue} />
@@ -117,7 +87,6 @@
     {#if mode === 'stars'}
         <div class="md:flex justify-between items-center">
             <StarCalculator {curve} starMultiplier={starValue} bind:acc bind:targetPP />
-            <ShareButton link={generatePermalink()} />
         </div>
         <div class="divider" />
         <StarMatrix {curve} starMultiplier={starValue} />
