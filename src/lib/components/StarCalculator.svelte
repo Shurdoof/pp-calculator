@@ -1,6 +1,7 @@
 <script lang="ts">
     import { calculateStars } from '$lib/pp/calculator';
     import type { Curve } from '$lib/pp/curves';
+import CopyButton from './CopyButton.svelte';
     import NumberSpinnerInput from './NumberSpinnerInput.svelte';
     import PpCalculationMeta from './PPCalculationMeta.svelte';
 
@@ -18,7 +19,6 @@
 <div>
     <div class="stats stats-vertical w-full md:stats-horizontal md:w-auto bg-base-200">
         <div class="stat">
-            <div class="stat-figure text-primary" />
             <div class="stat-title">Accuracy %</div>
 
             <div class="stat-value">
@@ -27,7 +27,6 @@
         </div>
 
         <div class="stat">
-            <div class="stat-figure text-primary" />
             <div class="stat-title">Target performance points</div>
 
             <div class="stat-value">
@@ -36,7 +35,6 @@
         </div>
 
         <div class="stat">
-            <div class="stat-figure text-primary" />
             <div class="stat-title">Star rating</div>
 
             <div class="stat-value text-primary">
@@ -44,4 +42,5 @@
             </div>
         </div>
     </div>
+    <CopyButton {calculation} />
 </div>

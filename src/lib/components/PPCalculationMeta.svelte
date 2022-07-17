@@ -23,7 +23,7 @@
         description = `Curve: ${calculation.curve.name} ${isCustomCurve ? ' (custom)' : ''}
         Star value: ${calculation.starMultiplier.toFixed(2)} ${starMultiplierName ? `(${starMultiplierName})` : ''}`;
 
-        imageUrl = $page.url.origin + $page.url.pathname + '/preview' + $page.url.search;
+        imageUrl = $page.url.origin + $page.url.pathname + '/image' + $page.url.search;
     }
 </script>
 
@@ -37,7 +37,7 @@
         <meta property="og:image" content={imageUrl} />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="450" />
-        <meta property="og:image:height" content="110" />
+        <meta property="og:image:height" content="138" />
         <meta name="twitter:card" content="summary_large_image" />
     {/if}
 </svelte:head>

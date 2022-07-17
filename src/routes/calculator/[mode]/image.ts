@@ -1,8 +1,9 @@
-import type { CalculationResult } from '$lib/pp/calculator';
+import { builtInStarMultipliers, type CalculationResult } from '$lib/pp/calculator';
 
 import type { RequestHandler } from '@sveltejs/kit';
 import { doCalculationRequest } from './_helper';
 import { createCanvas, registerFont } from 'canvas';
+import { getCurveById } from '$lib/pp/curves';
 
 function formatNumber(num: number) {
     return +num.toFixed(2);
@@ -17,13 +18,15 @@ class Point {
     }
 }
 
-async function createImage(calculation: CalculationResult) {
+function createImage(calculation: CalculationResult) {
     registerFont('fonts/OpenSans-Regular.ttf', { family: 'Open Sans' });
     registerFont('fonts/NotoSansJP-Regular.otf', { family: 'Noto Sans' });
 
-    const width = 450;
-    const height = 110;
-    const sectionSize = width / 3;
+    const sectionHeight = 70;
+    const footerHeight = 34;
+    const sectionSize = 150;
+    const width = sectionSize * 3;
+    const height = sectionHeight + footerHeight * 2;
     const borderColor = '#2F2F2F';
     const textColor = '#D4D4D4';
 
@@ -58,7 +61,6 @@ async function createImage(calculation: CalculationResult) {
         ctx.stroke();
     };
 
-    const sectionHeight = 70;
     const section = (title: string, text: string, position: number) => {
         ctx.beginPath();
         const startX = position * sectionSize;
@@ -73,25 +75,30 @@ async function createImage(calculation: CalculationResult) {
     };
 
     const footerStart = sectionHeight;
-    const footer = (text: string) => {
-        line(new Point(0, footerStart), new Point(width, footerStart));
+    const footer = (text: string, position: number = 0) => {
+        const startY = footerStart + footerHeight * position;
+        line(new Point(0, startY), new Point(width, startY));
         ctx.beginPath();
         ctx.fillStyle = textColor;
-        setFontSize(18);
-        ctx.fillText(text, 10, footerStart + 26);
+        setFontSize(16);
+        ctx.fillText(text, 10, startY + 22);
     };
+
+    const builtInMultiplier = builtInStarMultipliers.find(x => x.value === calculation.starMultiplier);
+    const builtInCurve = calculation.curve.id ? getCurveById(calculation.curve.id) : null;
 
     background('#1C1C1C');
     section('Accuracy', formatNumber(calculation.acc) + '%', 0);
     section('Star rating', formatNumber(calculation.stars) + '★', 1);
     section('PP', formatNumber(calculation.pp) + 'pp', 2);
-    footer(`Curve: ${calculation.curve.name}`);
+    footer(`Curve: ${calculation.curve.name}` + (builtInCurve ? '' : ' (custom)'), 0);
+    footer(`Star value: ${calculation.starMultiplier}` + (builtInMultiplier ? ` (${builtInMultiplier.name})` : ''), 1);
     border(4);
 
     return canvas.toBuffer();
 }
 
-export const GET: RequestHandler = async data => {
+export const GET: RequestHandler = data => {
     const result = doCalculationRequest(data);
 
     if (result.status !== 200) {
@@ -101,10 +108,13 @@ export const GET: RequestHandler = async data => {
         };
     }
 
-    const image = await createImage(result.body as CalculationResult);
+    const image = createImage(result.body as CalculationResult);
 
     return {
         status: 200,
-        body: image
+        body: image,
+        headers: {
+            'Content-Type': 'image/png'
+        }
     };
 };
