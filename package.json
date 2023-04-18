@@ -17,10 +17,10 @@
         "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
     },
     "devDependencies": {
-        "@sveltejs/adapter-auto": "1.0.0-next.61",
-        "@sveltejs/adapter-node": "1.0.0-next.91",
-        "@sveltejs/adapter-static": "1.0.0-next.37",
-        "@sveltejs/kit": "1.0.0-next.588",
+        "@sveltejs/adapter-auto": "2.0.0",
+        "@sveltejs/adapter-node": "1.2.3",
+        "@sveltejs/adapter-static": "2.0.2",
+        "@sveltejs/kit": "1.15.7",
         "@types/cookie": "0.5.1",
         "@typescript-eslint/eslint-plugin": "5.30.6",
         "@typescript-eslint/parser": "5.30.6",
