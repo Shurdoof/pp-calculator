@@ -63,8 +63,8 @@
     </div>
 
     <div class="tabs mb-4 tabs-boxed">
-        <a class="tab tab-lg" sveltekit:prefetch href={`/calculator/pp`} class:tab-active={data.mode === 'pp'}>Performance points</a>
-        <a class="tab tab-lg" sveltekit:prefetch href={`/calculator/stars`} class:tab-active={data.mode === 'stars'}>Stars</a>
+        <a class="tab tab-lg" data-sveltekit-prefetch href={`/calculator/pp`} class:tab-active={data.mode === 'pp'}>Performance points</a>
+        <a class="tab tab-lg" data-sveltekit-prefetch href={`/calculator/stars`} class:tab-active={data.mode === 'stars'}>Stars</a>
     </div>
 
     {#if data.mode === 'pp'}
