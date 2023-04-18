@@ -1,16 +1,3 @@
-<script context="module" lang="ts">
-    export async function load({ params }) {
-        if (params.mode !== 'pp' && params.mode !== 'stars') {
-            return {
-                status: 302,
-                redirect: '/calculator'
-            };
-        }
-
-        return { props: { mode: params.mode } };
-    }
-</script>
-
 <script lang="ts">
     import CurveSelector from '$lib/components/CurveSelector.svelte';
     import PpCalculator from '$lib/components/PPCalculator.svelte';
@@ -44,7 +31,11 @@
         return undefined;
     }
 
-    export let mode: CalculatorMode = 'pp';
+    interface PageData {
+        mode: CalculatorMode;
+    }
+    export let data: PageData;
+
     let query = $page.url.searchParams;
 
     export let acc = parseQueryStringNumber(getQueryValue('acc'), 95);
@@ -72,11 +63,11 @@
     </div>
 
     <div class="tabs mb-4 tabs-boxed">
-        <a class="tab tab-lg" sveltekit:prefetch href={`/calculator/pp`} class:tab-active={mode === 'pp'}>Performance points</a>
-        <a class="tab tab-lg" sveltekit:prefetch href={`/calculator/stars`} class:tab-active={mode === 'stars'}>Stars</a>
+        <a class="tab tab-lg" sveltekit:prefetch href={`/calculator/pp`} class:tab-active={data.mode === 'pp'}>Performance points</a>
+        <a class="tab tab-lg" sveltekit:prefetch href={`/calculator/stars`} class:tab-active={data.mode === 'stars'}>Stars</a>
     </div>
 
-    {#if mode === 'pp'}
+    {#if data.mode === 'pp'}
         <div class="md:flex justify-between items-center">
             <PpCalculator {curve} starMultiplier={starValue} bind:acc bind:starRating />
         </div>
@@ -84,7 +75,7 @@
         <PpMatrix {curve} starMultiplier={starValue} />
     {/if}
 
-    {#if mode === 'stars'}
+    {#if data.mode === 'stars'}
         <div class="md:flex justify-between items-center">
             <StarCalculator {curve} starMultiplier={starValue} bind:acc bind:targetPP />
         </div>

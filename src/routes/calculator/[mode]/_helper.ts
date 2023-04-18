@@ -4,12 +4,54 @@ import { getInitialCurve } from '$lib/pp/curves';
 import { parseNullableNumber } from '$lib/utils/numbers';
 import type { CalculatorMode, QueryParams } from './_types';
 
-export interface Response {
-    status: number;
-    body: CalculationResult | Error;
+// export interface Response {
+//     status: number;
+//     body: CalculationResult | Error;
+// }
+
+class CalculationResponse {
+    constructor(status: number, calculation: CalculationResult = null) {
+        this.status = status;
+        this.calculation = calculation;
+    }
+
+    toResponse() {
+        if (this.status === 200 && this.calculation) {
+            return new Response(JSON.stringify(this.calculation), {
+                status: 200
+            });
+        } else if (this.status === 400) {
+            return new Response('Bad request', {
+                status: 400
+            });
+        } else if (this.status === 404) {
+            return new Response('Not found', {
+                status: 404
+            });
+        }
+
+        return new Response('Server error', {
+            status: 500
+        });
+    }
+
+    static badRequest() {
+        return new CalculationResponse(400);
+    }
+
+    static notFound() {
+        return new CalculationResponse(404);
+    }
+
+    static ok(calculation: CalculationResult) {
+        return new CalculationResponse(200, calculation);
+    }
+
+    readonly status: number;
+    readonly calculation: CalculationResult | null;
 }
 
-export function doCalculationRequest({ url, params }): Response {
+export function doCalculationRequest({ url, params }): CalculationResponse {
     const mode: CalculatorMode = params.mode as CalculatorMode;
     const query: URLSearchParams = url.searchParams;
     function getQueryValue(...keys: (keyof QueryParams)[]) {
@@ -27,7 +69,7 @@ export function doCalculationRequest({ url, params }): Response {
     let starMultiplier = parseNullableNumber(getQueryValue('sv'));
 
     if (!curve) {
-        return badRequest();
+        return CalculationResponse.badRequest();
     }
 
     if (starMultiplier === null) {
@@ -39,43 +81,40 @@ export function doCalculationRequest({ url, params }): Response {
         const starRating = parseNullableNumber(getQueryValue('sr'));
 
         if (acc === null || starRating === null) {
-            return badRequest();
+            return CalculationResponse.badRequest();
         }
 
         const calculation = calculatePP(curve, acc, starRating, starMultiplier);
-        return ok(calculation);
+        return CalculationResponse.ok(calculation);
     } else if (mode === 'stars') {
         const acc = parseNullableNumber(getQueryValue('acc'));
         const targetPP = parseNullableNumber(getQueryValue('pp'));
 
         if (acc === null || targetPP === null) {
-            return badRequest();
+            return CalculationResponse.badRequest();
         }
 
         const calculation = calculateStars(curve, acc, targetPP, starMultiplier);
-        return ok(calculation);
+        return CalculationResponse.ok(calculation);
     }
 
-    return notFound();
+    return CalculationResponse.notFound();
 }
 
 function ok(body: CalculationResult): Response {
-    return {
-        status: 200,
-        body: body
-    };
+    return new Response(JSON.stringify(body), {
+        status: 200
+    });
 }
 
 function badRequest(): Response {
-    return {
-        status: 400,
-        body: Error('Bad request')
-    };
+    return new Response('Bad request', {
+        status: 400
+    });
 }
 
 function notFound(): Response {
-    return {
-        status: 404,
-        body: Error('Not found')
-    };
+    return new Response('Not found', {
+        status: 404
+    });
 }

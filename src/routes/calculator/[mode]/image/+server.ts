@@ -1,7 +1,8 @@
+// import { json } from '@sveltejs/kit';
 import { builtInStarMultipliers, type CalculationResult } from '$lib/pp/calculator';
 
 import type { RequestHandler } from '@sveltejs/kit';
-import { doCalculationRequest } from './_helper';
+import { doCalculationRequest } from '../_helper';
 import { createCanvas, registerFont } from 'canvas';
 import { getCurveById } from '$lib/pp/curves';
 
@@ -102,19 +103,14 @@ export const GET: RequestHandler = data => {
     const result = doCalculationRequest(data);
 
     if (result.status !== 200) {
-        return {
-            status: result.status,
-            body: result.body as Error
-        };
+        return result.toResponse();
     }
 
-    const image = createImage(result.body as CalculationResult);
+    const image = createImage(result.calculation);
 
-    return {
-        status: 200,
-        body: image,
+    return new Response(image, {
         headers: {
             'Content-Type': 'image/png'
         }
-    };
+    });
 };
