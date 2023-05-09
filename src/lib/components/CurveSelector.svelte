@@ -2,6 +2,7 @@
     import { curves, type Curve } from '$lib/pp/curves';
     import { parseCurve, stringifyCurve, StringifyCurveOptions } from '$lib/pp/parser';
     import { addUserCurve, getUserCurves, removeUserCurve } from '$lib/pp/userCurves';
+    import Plot from './Plot.svelte';
 
     let userCurves = getUserCurves();
     export let temporaryCurves: Curve[] = [];
@@ -108,6 +109,7 @@
         <a href="#delete-curve" class="btn m-1">Delete curve</a>
     {/if}
     <a href="#add-curve" class="btn m-1" on:click={resetDialog}>Add curve</a>
+    <!-- <a href="#graph" class="btn m-1">Graph</a> -->
 </div>
 
 <div class="modal" id="add-curve">
@@ -187,6 +189,16 @@
             {#if selectedCurveType === 'temp'}
                 <button class="btn" on:click={handleCopyToLocalClick}>Copy to local</button>
             {/if}
+            <a href={'#'} class="btn">Close</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="graph">
+    <div class="modal-box max-w-7xl">
+        <h3 class="font-bold text-lg mb-4">Graph</h3>
+        <Plot curves={[...curves, ...userCurves, ...temporaryCurves]} selectedCurve={value} />
+        <div class="modal-action">
             <a href={'#'} class="btn">Close</a>
         </div>
     </div>

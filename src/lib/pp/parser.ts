@@ -73,7 +73,7 @@ export function stringifyCurve(curve: Curve, options: StringifyCurveOptions = nu
 
     let points = curve.points;
     if (options.direction === 'asc') {
-        points = points.slice(0).sort((a, b) => a[0] - b[0]);
+        points = points.slice().sort((a, b) => a[0] - b[0]);
     }
 
     for (let i = 0; i < points.length; i++) {

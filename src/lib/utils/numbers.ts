@@ -24,7 +24,7 @@ export function parseNullableNumber(value: number | string | null | undefined): 
     return num;
 }
 
-export function generateRangeArray(start: number, end: number, step: number = 1) {
+export function generateRangeArray(start: number, end: number, step: number = 1): number[] {
     const result = [];
 
     if (start > end) {

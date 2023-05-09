@@ -10,6 +10,8 @@
     import { parseNullableNumber } from '$lib/utils/numbers';
     import type { CalculatorMode, QueryParams } from './_types';
 
+    let query = $page.url.searchParams;
+
     function parseQueryStringNumber(value: string, defaultValue?: number) {
         const result = parseNullableNumber(value);
 
@@ -34,9 +36,8 @@
     interface PageData {
         mode: CalculatorMode;
     }
+    
     export let data: PageData;
-
-    let query = $page.url.searchParams;
 
     export let acc = parseQueryStringNumber(getQueryValue('acc'), 95);
     export let starRating = parseQueryStringNumber(getQueryValue('sr'), 7);
