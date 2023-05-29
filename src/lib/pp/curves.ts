@@ -76,7 +76,7 @@ const duhhelRamenV5Curve: Curve = {
 
 const duhhelRamenV6Curve: Curve = {
     id: 'duhhelramenv6',
-    name: 'DuhhelRamenV6™ (current)',
+    name: 'DuhhelRamenV6™ (previous)',
     points: [
         [1, 7],
         [0.999, 6.24],
@@ -197,7 +197,7 @@ let AutogenV2Curve: Curve = {
 
 let AutogenV3Curve: Curve = {
     id: 'autogenv3',
-    name: 'Automatically Generated Curve V3 (next?)',
+    name: 'Automatically Generated Curve V3 (current)',
     points: [
         [1, 5.367394282890631],
         [0.9995, 5.019543595874787],
@@ -268,4 +268,4 @@ export function getInitialCurve(value: string | undefined, defaultCurve = curves
     return getCurveById(value) || parseQueryStringCurve(value) || defaultCurve;
 }
 
-export const curves = [duhhelRamenV6Curve, AutogenV3Curve, AutogenV2Curve, AutogenV1Curve, duhhelRamenV5Curve, fernCurve];
+export const curves = [AutogenV3Curve, duhhelRamenV6Curve, duhhelRamenV5Curve, fernCurve];
